@@ -43,9 +43,8 @@ class Main : JavaPlugin(), Listener {
             args: Array<out String>
     ): Boolean {
         if (sender is Player && command.name == "babies") {
-            getRegisteredEntities().forEach {
-                it.addPotionEffect(PotionEffect(PotionEffectType.GLOWING, 30, 0))
-            }
+            val effect = PotionEffect(PotionEffectType.GLOWING, 200, 0, false)
+            getRegisteredEntities().forEach { it.addPotionEffect(effect) }
             return true
         }
         return false
@@ -100,6 +99,7 @@ class Main : JavaPlugin(), Listener {
         val registration = getRegistrations().find { it.id == id }
         when {
             registration == null -> {
+                event.isCancelled = true
                 baby.age = -32768
                 updateRegistration(id, owner)
                 baby.world.spawnParticle(
@@ -114,6 +114,7 @@ class Main : JavaPlugin(), Listener {
                 player.sendMessage("아기로 등록되었습니다. 앞으로 성장하지 않습니다.")
             }
             registration.owner == owner -> {
+                event.isCancelled = true
                 baby.setAdult()
                 removeRegistration(id)
                 baby.world.spawnParticle(

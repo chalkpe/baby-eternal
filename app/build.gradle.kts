@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "pe.chalk.bukkit"
-version = "0.0.1"
+version = "0.0.2"
 
 repositories {
     mavenCentral()
@@ -17,6 +17,7 @@ dependencies {
 }
 
 spigot {
+    apiVersion = "1.21"
     description = "Keep baby animals from growing up"
     commands {
         create("babies") {
